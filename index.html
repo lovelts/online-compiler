@@ -1,0 +1,68 @@
+<!--
+ * @Author: lts
+ * @Date: 2021-03-02 17:04:51
+ * @LastEditTime: 2021-03-05 18:17:34
+ * @FilePath: \online-compiler\index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线编辑器</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="header">
+            <div class="header-logo">
+                <!-- <img src="./imgs/2.jpg" alt=""> -->
+                <span class="logo-title">HTML CSS JS</span>
+                <span class="header-name"> code-online</span>
+                <div class="save">保存</div>
+            </div>
+        </div>
+        <div>
+            <div class="box" id="box">
+                <div class="drag first-drag"></div>
+                <div class="my-html editor-box" id="myHtml">
+                    <div class="title">HTML</div>
+                    <textarea name="" id="htmlContent" cols="30" rows="10"></textarea>
+                </div>
+                <div class="drag"></div>
+                <div class="my-css editor-box" id="myCss">
+                    <div class="title">CSS</div>
+
+                    <textarea name="" id="cssContent" cols="30" rows="10"></textarea>
+
+                </div>
+                <div class="drag"></div>
+                <div class="my-js editor-box" id="myJs">
+                    <div class="title">JS 
+                        <span class="operation" id="operation">运行</span>
+                    </div>
+                    <textarea name="" id="jsContent" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="hor-drag" id="horDrag"></div>
+        <div class="my-output ifame" id="ifame">
+            <iframe id="iframeResult" frameborder="0"></iframe>
+            <div  id="dragCover" class="drag-cover" style="display: none;"></div>
+            <div class="loading-text" id="loadingText">loading........</div>
+
+        </div>
+        <!-- <div class="ifame"></div> -->
+
+    </div>
+    <script src="./js/index.js"></script>
+    <script src="./js/drag.js"></script>
+</body>
+<script>
+   
+</script>
+
+</html>

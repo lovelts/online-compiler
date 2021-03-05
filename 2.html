@@ -1,0 +1,145 @@
+<!--
+ * @Author: lts
+ * @Date: 1821-03-01 19:52:38
+ * @LastEditTime: 2021-03-05 08:47:58
+ * @FilePath: \online-compiler\2.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        #box {
+            width: 100%;
+            height: 350px;
+            border: 1px solid black;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .my-html,
+        .my-css,
+        .my-js {
+            border: 1px solid red;
+            display: flex;
+            width: 33.33333333%;
+            /* width: 100%; */
+        }
+
+        .drag {
+            position: relative;
+            z-index: 2;
+            width: 18px;
+            cursor: col-resize;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.4);
+            background: #333642;
+        }
+
+        .ipt {
+            width: 100%;
+            border: 1px solid aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div class="drag"></div>
+        <div class="my-html" id="myHtml" style="width: 33.3333%;">
+            <div class="ipt"></div>
+        </div>
+        <div class="drag"></div>
+        <div class="my-css" id="myCss" style="width: 33.3333%;">
+
+            <div class="ipt"></div>
+        </div>
+        <div class="drag"></div>
+        <div class="my-js" id="myJs" style="width: 33.3333%;">
+            <div class="ipt"></div>
+        </div>
+    </div>
+
+    <script>
+        let drag = document.getElementsByClassName('drag')[1]
+        let box = document.getElementById('box')
+        console.log(drag)
+        let myHtml = document.getElementById('myHtml')
+        let myCss = document.getElementById('myCss')
+        let myJs = document.getElementById('myJs')
+        let baseCssWidth = myCss.offsetWidth
+        let baseHtmlWidth = myHtml.offsetWidth
+        let dragWidth = parseFloat(getStyle(drag, 'width'))
+        drag.onmousedown = function (event) {
+            let nowMouseDowm = event.clientX
+            let mousePosi = event.clientX
+            var al = parseInt(event.clientX - this.offsetLeft);//求出鼠标到盒子距离  左
+            let { clientWidth } = document.body
+            let htmlBoxWidth = parseFloat(myHtml.style.width)
+            let cssBoxWidth = parseFloat(myCss.style.width)
+            document.onmousemove = function (event) {
+                event = event || window.event;
+                // let htmlBoxWidth = parseFloat(getStyle(myHtml, 'width'))
+                // let cssBoxWidth = parseFloat(getStyle(myCss, 'width'))
+                let htmlBoxWidth = parseFloat(myHtml.style.width)
+                let cssBoxWidth = parseFloat(myCss.style.width)
+                let total = (htmlBoxWidth + cssBoxWidth).toFixed(4)
+                console.log(total)
+                if (Math.abs(mousePosi) > Math.abs(event.clientX) && event.clientX >= 18 + al) {
+                    // console.log(nowHtmlWidth)
+                    const nowHtmlWidth = (((event.clientX - al - dragWidth) / clientWidth) * 100).toFixed(4)
+                    myHtml.style.width = nowHtmlWidth + '%'
+                    myCss.style.width = total - nowHtmlWidth + '%'
+
+                } else if (Math.abs(mousePosi) < Math.abs(event.clientX)) {
+                    // console.log(event.clientX)
+                    const nowHtmlWidth = (((event.clientX - al - dragWidth) / clientWidth) * 100).toFixed(4)
+                    myCss.style.width = total - nowHtmlWidth + '%'
+                    myHtml.style.width = nowHtmlWidth + '%'
+                    const nowCssWidth = (((baseCssWidth - (event.clientX - nowMouseDowm)) / clientWidth) * 100).toFixed(4)
+                    // myHtml.style.width = total - nowCssWidth + '%'
+                    // myCss.style.width = nowCssWidth + '%'
+                    if (nowCssWidth <= 0.01) {
+                        let nowHtmlWidth = (((event.clientX - al - dragWidth) / clientWidth) * 100).toFixed(4)
+                        console.log(nowHtmlWidth)
+                        console.log(1111111111)
+                        myHtml.style.width = 66.6666 + '%'
+                        myJs.style.width = 33.3333 + '%'
+                        // myCss.style.width = 0 + '%'
+                        // myJs.style.width = 99.9999 - nowHtmlWidth + '%'
+                        // myHtml.style.width = nowHtmlWidth + '%'
+
+                    }
+                    // console.log(nowCssWidth, baseCssWidth - (event.clientX - nowMouseDowm))
+                }
+
+            }
+            document.onmouseup = function () {
+                document.onmousemove = null; //取消onmousemove 取消移动
+                document.onmouseup = null;//取消这个onmouseup
+
+            }
+            return false
+        }
+        function getStyle(obj, name) { // 获取元素样式的函数 
+            if (window.getComputedStyle) {  //判断浏览器
+                return getComputedStyle(obj, null)[name];
+            }
+            else {
+                return box.currentStyle[name];
+            }
+        }
+    </script>
+</body>
+
+</html>

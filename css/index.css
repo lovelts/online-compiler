@@ -1,0 +1,195 @@
+* {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.app {
+    width           : 100%;
+    height          : 100%;
+    display         : flex;
+    flex-direction  : column;
+    background-color: #000;
+}
+
+.app .header {
+    width           : 100%;
+    height          : 60px;
+    background-color: black;
+    position: relative;
+
+}
+.save {
+    position: absolute;
+    color: rgb(255, 255, 255);
+    background-color: #4c4f5a;
+    border: 3px solid #444857;
+    border-radius: 5px;
+    width: 90px;
+    text-align: center;
+    font-size: 21px;
+    line-height: 45px;
+    font-weight: 600;
+    height: 50px;
+    right: 10px;
+    top: calc(50% - 25px);
+    cursor: pointer;
+}
+.header-logo {
+    height     : 60px;
+    display    : flex;
+    align-items: flex-end;
+    margin-left: 15px;
+}
+
+.header-logo .logo-title {
+    color: rgb(74, 4, 145);
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.header-name {
+    color      : #fff;
+    font-size  : 26px;
+    font-weight: 600;
+    margin-left: 10px;
+    /* margin-top : 25px; */
+}
+
+.app .box {
+    width     : 100%;
+    height    : 350px;
+    min-height: 125px;
+    border    : 1px solid black;
+    display   : flex;
+    overflow  : hidden;
+}
+
+.my-html,
+.my-css,
+.my-js {
+    display       : flex;
+    flex-direction: column;
+}
+
+.drag {
+    position    : relative;
+    z-index     : 2;
+    width       : 18px;
+    cursor      : col-resize;
+    border-left : 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
+    background  : #333642;
+}
+
+.title {
+    font-size       : 20px;
+    font-weight     : 600;
+    color           : #aaaebc;
+    margin-bottom   : 3px;
+    width           : 100%;
+    background-color: rgb(39, 39, 39);
+    border-bottom: 1px solid #000;
+    box-shadow: 0 0 5px gray;
+    position: relative;
+}
+.operation {
+    position: absolute;
+    right: 5px;
+    width: 60px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+}
+textarea {
+    padding         : 5px 10px;
+    width           : 100%;
+    height          : 95%;
+    font-size       : 18px;
+    outline         : none;
+    resize          : none;
+    border          : none;
+    background-color: #000;
+    color           : rgb(238, 185, 49);
+}
+
+.hor-drag {
+    background        : #333642;
+    border-bottom     : 1px solid black;
+    -webkit-box-shadow: 0 0 1px black;
+    box-shadow        : 0 0 1px black;
+    height            : 17px;
+    cursor            : row-resize;
+    position          : relative;
+    z-index           : 10;
+}
+
+.ifame {
+    position         : relative;
+    -webkit-box-flex : 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow        : 1;
+    overflow         : hidden;
+    background       : radial-gradient(circle, #444857, #2c303a);
+}
+
+.my-output iframe {
+    border    : 0;
+    width     : 100%;
+    height    : 100%;
+    position  : absolute;
+    top       : 0;
+    left      : 0;
+}
+
+.drag-cover {
+    position: absolute;
+    z-index : 2;
+    top     : 0;
+    right   : 0;
+    left    : 0;
+    bottom  : 0;
+}
+
+.loading-text {
+    position          : absolute;
+    top               : 50%;
+    left              : 50%;
+    -webkit-transform : translate(-50%, -50%);
+    transform         : translate(-50%, -50%);
+    color             : #b7bbc8;
+    opacity           : 1;
+    -webkit-transition: opacity 0.2s;
+    transition        : opacity 0.2s;
+}
+.first-drag {
+    cursor: inherit;
+}
+textarea::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 4px;
+    /*高宽分别对应横竖滚动条的尺寸*/
+    height: 4px;
+}
+textarea::-webkit-scrollbar:hover {
+    width: 10px;
+    height: 10px;
+}
+textarea::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgb(104, 104, 104);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+textarea::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 6px rgb(63, 63, 63);
+    border-radius: 0;
+}

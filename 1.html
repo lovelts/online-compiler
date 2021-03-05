@@ -1,0 +1,253 @@
+<!--
+ * @Author: lts
+ * @Date: 2021-03-01 19:52:38
+ * @LastEditTime: 2021-03-04 21:06:35
+ * @FilePath: \online-compiler\1.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.20/lodash.core.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {}
+
+        #box {
+            width: 100%;
+            height: 500px;
+            border: 1px solid black;
+            display: flex;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        .my-html,
+        .my-css,
+        .my-js {
+            /* border: 1px solid red; */
+            display: flex;
+            width: 33.3333%;
+            min-width: 20px;
+            background-color: #000;
+        }
+
+        .drag {
+            min-width: 20px;
+            width: 20px;
+            background-color: black;
+            cursor: col-resize;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        .ipt {
+            width: 100%;
+            /* border: 1px solid aqua; */
+            /* min-width: 100px;
+             overflow-x: scroll; */
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+            color: wheat;
+            margin-bottom: 3px;
+        }
+
+        textarea {
+            padding: 5px 10px;
+            width: 100%;
+            height: 95%;
+            font-size: 18px;
+            outline: none;
+            resize: none;
+            /* min-width: 100px; */
+            /* overflow-x: scroll; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div class="my-html" id="myHtml" style="width:33.3333%">
+            <div class="drag"></div>
+            <div class="ipt">
+                <div class="title">HTML</div>
+                <textarea name="" id="htmlContent" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="my-css" id="myCss" style="width:33.3333%">
+            <div class="drag"></div>
+            <div class="ipt">
+                <div class="title">CSS</div>
+
+                <textarea name="" id="cssContent" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="my-js" id="myJs" style="width:33.3333%">
+            <div class="drag"></div>
+            <div class="ipt">
+                <div class="title">JS</div>
+
+                <textarea name="" id="jsContent" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let drag = document.getElementsByClassName('drag')
+        let box = document.getElementById('box')
+        let myHtml = document.getElementById('myHtml')
+        let myCss = document.getElementById('myCss')
+        let myJs = document.getElementById('myJs')
+        // let mousePosi = 0
+        // let baseCssWidth = parseFloat(getStyle(myCss, 'width'))
+        // let baseHtmlWidth = parseFloat(getStyle(myHtml, 'width'))
+        let baseHtmlWidth = myHtml.offsetWidth
+        let baseCssWidth = myCss.offsetWidth
+        // drag.onmousedown = function (event) {
+        //     mousePosi = event.clientX
+        //     // console.log(myHtml.offsetWidth)
+        //     var al = event.clientX - this.offsetLeft;//求出鼠标到盒子距离  左
+        //     box.onmousemove = function (event) {
+        //         event = event || window.event;
+        //         let htmlBoxWidth = parseFloat(getStyle(myHtml, 'width'))
+        //         let cssBoxWidth = parseFloat(getStyle(myCss, 'width'))
+        //         let { clientWidth } = document.body
+        //         console.log()
+        //         if (Math.abs(mousePosi) > Math.abs(event.clientX) && event.clientX >= 20 + al) {
+        //             const nowHtmlWidth = (((event.clientX - al) / clientWidth) * 100).toFixed(4)
+        //             myHtml.style.width = nowHtmlWidth + '%'
+        //             myCss.style.width = 66.6666 - nowHtmlWidth + '%'
+
+        //         } else if (Math.abs(mousePosi) < Math.abs(event.clientX)) {
+        //             // console.log(event.clientX)
+        //             const nowHtmlWidth = (((event.clientX - al) / clientWidth) * 100).toFixed(4)
+        //             myHtml.style.width = nowHtmlWidth + '%'
+        //             myCss.style.width = 66.6666 - nowHtmlWidth + '%'
+        //         }
+
+        //         mousePosi = event.clientX
+        //         if (parseInt(event.clientX) <= 20 + al) {
+        //             box.onmousemove = null
+        //         }
+        //     }
+        //     document.onmouseup = function () {
+        //         box.onmousemove = null; //取消onmousemove 取消移动
+        //         document.onmouseup = null;//取消这个onmouseup
+
+        //     }
+        //     return false
+        // }
+        myDrag(drag[1], myHtml, myCss, myJs)
+        // myDrag(drag[2],myCss,myJs)
+
+        function myDrag(drag, myHtml, myCss, myJs) {
+            drag.onmousedown = function (event) {
+                let mousePosi = event.clientX
+                // console.log(myHtml.offsetWidth)
+                var al = event.clientX - this.offsetLeft;//求出鼠标到盒子距离  左
+                let { clientWidth } = document.body
+                let htmlBoxWidth = parseFloat(myHtml.style.width)
+                let cssBoxWidth = parseFloat(myCss.style.width)
+                // let jsBoxWidth = parseFloat(getStyle(myJs, 'width'))
+                let total = htmlBoxWidth + cssBoxWidth
+                console.log(total)
+                box.onmousemove = function (event) {
+                    event = event || window.event;
+                    let htmlBoxWidth = parseFloat(getStyle(myHtml, 'width'))
+                    let cssBoxWidth = parseFloat(getStyle(myCss, 'width'))
+
+                    if (Math.abs(mousePosi) > Math.abs(event.clientX) && event.clientX >= 20 + al) {
+                        const nowHtmlWidth = (((event.clientX - al) / clientWidth) * 100).toFixed(4)
+                        myHtml.style.width = nowHtmlWidth + '%'
+                        myCss.style.width = total - nowHtmlWidth + '%'
+
+                    } else if (Math.abs(mousePosi) < Math.abs(event.clientX)) {
+                        // console.log(event.clientX)
+                        const nowHtmlWidth = (((event.clientX - al) / clientWidth) * 100).toFixed(4)
+                        myHtml.style.width = nowHtmlWidth + '%'
+                        myCss.style.width = total - nowHtmlWidth + '%'
+                    } 
+
+                    mousePosi = event.clientX
+                    if (parseInt(event.clientX) <= 20 + al) {
+                        box.onmousemove = null
+                    }
+                }
+                document.onmouseup = function () {
+                    box.onmousemove = null; //取消onmousemove 取消移动
+                    document.onmouseup = null;//取消这个onmouseup
+
+                }
+                return false
+            }
+        }
+        myDrag2(drag[2], myHtml, myCss, myJs)
+        function myDrag2(drag, myHtml, myCss, myJs) {
+            drag.onmousedown = function (event) {
+                mousePosi = event.clientX
+                // console.log(myHtml.offsetWidth)
+                var al = event.clientX - this.offsetLeft;//求出鼠标到盒子距离  左
+
+                let { clientWidth } = document.body
+                let csslBoxWidth = parseFloat(myCss.style.width)
+                let jsBoxWidth = parseFloat(myJs.style.width)
+                // let jsBoxWidth = parseFloat(getStyle(myJs, 'width'))
+                let total = csslBoxWidth + jsBoxWidth
+
+                box.onmousemove = function (event) {
+                    event = event || window.event;
+                    let htmlBoxWidth = parseFloat(getStyle(myHtml, 'width'))
+                    let cssBoxWidth = parseFloat(getStyle(myCss, 'width'))
+                    let jsBoxWidth = parseFloat(getStyle(myJs, 'width'))
+                    if (Math.abs(mousePosi) > Math.abs(event.clientX) && event.clientX >= 20 + al) {
+                        const nowCssWidth = (((event.clientX - al - htmlBoxWidth) / clientWidth) * 100).toFixed(4)
+                        myCss.style.width = nowCssWidth + '%'
+                        myJs.style.width = total - nowCssWidth + '%'
+
+                    } else if (Math.abs(mousePosi) < Math.abs(event.clientX) && event.clientX <= clientWidth - 20 + al) {
+                        // console.log(event.clientX)
+                        const nowCssWidth = (((event.clientX - al - htmlBoxWidth) / clientWidth) * 100).toFixed(4)
+                        myCss.style.width = nowCssWidth + '%'
+                        myJs.style.width = total - nowCssWidth + '%'
+                    }
+                   
+                    mousePosi = event.clientX
+                    if (parseInt(event.clientX) <= 20 + al) {
+                        box.onmousemove = null
+                    }
+                }
+                document.onmouseup = function () {
+                    box.onmousemove = null; //取消onmousemove 取消移动
+                    document.onmouseup = null;//取消这个onmouseup
+
+                }
+                return false
+            }
+        }
+
+
+
+        function getStyle(obj, name) { // 获取元素样式的函数 
+            if (window.getComputedStyle) {  //判断浏览器
+                return getComputedStyle(obj, null)[name];
+            }
+            else {
+                return box.currentStyle[name];
+            }
+        }
+    </script>
+</body>
+
+</html>
